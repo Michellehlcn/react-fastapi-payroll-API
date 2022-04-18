@@ -2,18 +2,18 @@
 Working In Progress
 
 ### Instruction 
-Python3 -m venv .env
-Source .env/bin/activate
+python3 -m venv .env
+source .env/bin/activate
 
 ### Install requires
-Pip3 install requirements.txt
+pip3 install requirements.txt
 
 ### Install react dependencies
-Cd ./frontend/src && Npm install
+cd ./frontend/src && npm install
 
 ### Start app
 ### Run api
-Cd ./backend && Uvicorn main:app -- reload
+cd ./backend && Uvicorn main:app -- reload
 
 ### Run react
-Npm start 
+npm start 
