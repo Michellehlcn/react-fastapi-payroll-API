@@ -18,7 +18,7 @@ const PersonalInfor = ({ active, handleModal, token, id, setErrorMessage }) => {
           Authorization: "Bearer " + token,
         },
       };
-      const response = await fetch(`/employees/${id}`, requestOptions);
+      const response = await fetch(`/api/profile/${id}`, requestOptions);
 
       if (!response.ok) {
         setErrorMessage("Could not get the Employee Information");
@@ -67,7 +67,7 @@ const PersonalInfor = ({ active, handleModal, token, id, setErrorMessage }) => {
         email_address: email,
       }),
     };
-    const response = await fetch("/employees", requestOptions);
+    const response = await fetch("/api/profile", requestOptions);
     if (!response.ok) {
       setErrorMessage("Something went wrong when creating form");
     } else {
@@ -94,7 +94,7 @@ const PersonalInfor = ({ active, handleModal, token, id, setErrorMessage }) => {
 
       }),
     };
-    const response = await fetch(`/employees/${id}`, requestOptions);
+    const response = await fetch(`/api/profile/${id}`, requestOptions);
     if (!response.ok) {
       setErrorMessage("Something went wrong when updating form");
     } else {
