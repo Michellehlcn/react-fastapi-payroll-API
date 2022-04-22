@@ -4,10 +4,14 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Header from "./components/Header";
 import Table from "./components/Table";
+import ErrorPage from "./components/ErrorPage";
+
 import { UserContext } from "./context/UserContext";
 
+import TimeSheetForm from "./components/TimeSheetForm";
 
-import { Routes, Route, Redirect } from "react-router-dom";
+
+import { Routes, Route, Navgate, Link } from "react-router-dom";
 import { Admin, Resource, ListGuesser } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 
@@ -41,25 +45,31 @@ const App = () => {
 
 
   return (
-    <><Admin dataProvider={dataProvider}>
-       <Resource name="users" list={ListGuesser} />
-   </Admin>
-);
-      <Header title={message} />
-      <div className="columns">
+
+<>
+    
+    <Header title={message} />
+    
+    <div className="columns">
         <div className="column"></div>
         <div className="column m-5 is-two-thirds">
-          {!token ? (
-            <div className="columns">
-              <Register /> <Login />
-            </div>
-          ) : (
-            <Table />
-          )}
+
+          <div className="columns">
+        
+
+            {!token ? (<div className="column"><Register /></div> ) : null}
+            {!token ? (<div className="column"><Login /></div> ) : (<div><Table /><TimeSheetForm /></div>)}
+
+          </div>
+         
+
         </div>
         <div className="column"></div>
-      </div>
-    </>
+    </div>
+   
+</>
+
+
   );
 };
 
