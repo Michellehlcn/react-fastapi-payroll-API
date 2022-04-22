@@ -21,7 +21,7 @@ class User(_database.Base):
 	
 	posts = _orm.relationship("Post", back_populates="owner")
 	form = _orm.relationship("Form", back_populates="owner")
-	employees = _orm.relationship("Employee", back_populates="owner")
+	trainers = _orm.relationship("Trainer", back_populates="owner")
 	def verify_password(self, password: str):
 		return _hash.bcrypt.verify(password, self.hashed_password)
 
@@ -33,6 +33,4 @@ class Post(_database.Base):
 	date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
 
 	owner = _orm.relationship("User", back_populates="posts")
-
-
 
