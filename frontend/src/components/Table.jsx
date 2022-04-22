@@ -26,7 +26,7 @@ const Table = () => {
         Authorization: "Bearer " + token,
       },
     };
-    const response = await fetch(`/employees/${id}`, requestOptions);
+    const response = await fetch(`/api/profile/${id}`, requestOptions);
     if (!response.ok) {
       setErrorMessage("Failed to delete profiles");
     }
@@ -42,13 +42,14 @@ const Table = () => {
         Authorization: "Bearer " + token,
       },
     };
-    const response = await fetch(`/employees/${id}`, requestOptions);
+    const response = await fetch(`/api/profile/${id}`, requestOptions);
     if (!response.ok) {
       setErrorMessage("Something went wrong. Couldn't load the Profiles");
     } else {
       const data = await response.json();
       setInfor(data);
       setLoaded(true);
+      
     }
   };
 
@@ -60,8 +61,9 @@ const Table = () => {
   const handleModal = () => {
     setActiveModal(!activeModal);
     getInfor();
-    setId(null);
+    setId();
   };
+  
 
   return (
     <>
