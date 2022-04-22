@@ -158,7 +158,17 @@ async def generate_token(
 async def get_user(user: _schemas.User = _fastapi.Depends(get_current_user)):
     return user
 
+def verify_role(required_role: List, user: _schemas.User = _fastapi.Depends(get_current_user)):
+    if user.role not in required_role:
+        raise HTTPException(status_code=403, detail="Operation not permitted")
+    else:
+        return user
 
+@router.get("/admin", response_model=_schemas.User)
+async def get_user(user: _schemas.User = _fastapi.Depends(get_current_user)):
+    # Check Manager role
+    user = verify_role(required_role=['manager'],user = user)
+    return user
 
 
 
@@ -176,9 +186,6 @@ class RoleChecker:
 allow_create_resource = RoleChecker(["admin","manager"])
 
 
-def verify_role(required_role: List, user: _schemas.User = _fastapi.Depends(get_current_user)):
-    if user.role not in required_role:
-        raise HTTPException(status_code=403, detail="Operation not permitted")
 
 
 
