@@ -11,11 +11,24 @@ import datetime as _dt
 class Form(_database.Base):
     __tablename__="form"
     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
-    title = _sql.Column(_sql.String, nullable=False)
-    time = _sql.Column(_sql.String, nullable=False)
+
     subject = _sql.Column(_sql.String,nullable=False)
-    location = _sql.Column(_sql.String, nullable=False)
-    description = _sql.Column(_sql.String, nullable=False)
+    campus = _sql.Column(_sql.String, nullable=False)
+    day = _sql.Column(_sql.String, nullable=False)
+    am_pm_eve = _sql.Column(_sql.String, nullable=False)
+    time = _sql.Column(_sql.String, nullable=False)
+    course = _sql.Column(_sql.String,nullable=False)
+    group = _sql.Column(_sql.String, nullable=False)
+    zoom_id_for_trainer =_sql.Column(_sql.String)
+    zoom_password_for_trainer =_sql.Column(_sql.String)
+    zoom_link_for_students =_sql.Column(_sql.String)
+    campus_room_no_capacity =_sql.Column(_sql.String)
+    classrom_capacity =_sql.Column(_sql.Integer)
+    number_of_student =_sql.Column(_sql.Integer)
+    student_profile =_sql.Column(_sql.String)
+    class_size_utilization =_sql.Column(_sql.String)
+    unique_group = _sql.Column(_sql.Boolean(), default=False, nullable=False)
+
     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
     is_active = _sql.Column(_sql.Boolean(), default=True, nullable=False)
     owner_id = _sql.Column(_sql.Integer, _sql.ForeignKey("users.id"))
