@@ -18,7 +18,7 @@ const Login = () => {
       ),
     };
 
-    const response = await fetch("/users/token", requestOptions);
+    const response = await fetch("/api/users/token", requestOptions);
     const data = await response.json();
 
     if (!response.ok) {
@@ -34,6 +34,7 @@ const Login = () => {
   };
 
   return (
+
     <div className="column">
       <form className="box" onSubmit={handleSubmit}>
         <h1 className="title has-text-centered">Login</h1>
