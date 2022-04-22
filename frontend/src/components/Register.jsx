@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+mport React, { useContext, useState } from "react";
 import DropdownList from "react-widgets/DropdownList";
 import { UserContext } from "../context/UserContext";
 import ErrorMessage from "./ErrorMessage";
@@ -17,11 +17,12 @@ const Register = () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, hashed_password: password, role: role.toString()}),
+      body: JSON.stringify({ "email": email, "password": password, "role": role.toString()}),
     };
 
-    const response = await fetch("/users", requestOptions);
+    const response = await fetch("/api/users", requestOptions);
     const data = await response.json();
+    console.log(requestOptions)
 
 
     if (!response.ok) {
@@ -42,9 +43,10 @@ const Register = () => {
     }
   };
 
+
   return (
     <div className="column">
-      <form className="box" onSubmit={handleSubmit}>
+      <form className="box" id="myform" onSubmit={handleSubmit}>
         <h1 className="title has-text-centered">Register</h1>
         <div className="field">
           <label className="label">Email Address</label>
@@ -65,7 +67,7 @@ const Register = () => {
           <label className="label">Select Role</label>
           <div className="control">
           <select
-            value={role}
+            value={role.toString()}
             onChange={(e) => setRole(e.target.value)}>
             <option value="manager">Manager</option>
             <option value="trainer">Trainer</option>
@@ -79,13 +81,14 @@ const Register = () => {
             <input
               type="password"
               placeholder="Enter password"
-              value={password}
+              value={password.toString()}
               onChange={(e) => setPassword(e.target.value)}
               className="input"
               required
             />
           </div>
         </div>
+
         <div className="field">
           <label className="label">Confirm Password</label>
           <div className="control">
