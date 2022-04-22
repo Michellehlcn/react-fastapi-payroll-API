@@ -5,10 +5,11 @@ import pydantic as _pydantic
 
 class _UserBase(_pydantic.BaseModel):
     email: str
+    role: str
 
 class UserCreate(_UserBase):
     password: str
-    role: str
+
 
     class Config:
         orm_mode = True
