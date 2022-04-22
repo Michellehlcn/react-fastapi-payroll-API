@@ -11,12 +11,12 @@ import sqlalchemy.orm as _orm
 #database setup
 from database import Base, engine
 from models.user_model import User
-from models.employee_model import Employee
+from models.trainer_model import Trainer
 from models.form_model import Form
 Base.metadata.create_all(bind=engine)
 
 # routes imports
-from routes import (user_router, employee_router, form_router, login_router, register_router)
+from routes import (user_router, trainer_router, form_router, login_router, register_router)
 
 import services.user_service as _services
 import schemas.user_schema as _schemas
@@ -45,34 +45,34 @@ app.add_middleware(
 
 app.include_router(
     user_router.router,
-    prefix='/users',
+    prefix='/api/users',
     tags=['Users Operations'],
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
 
 app.include_router(
-    employee_router.router,
-    prefix='/employees',
-    tags=['Émployees Operations'],
+    trainer_router.router,
+    prefix='/api/profile',
+    tags=['Trainers Operations'],
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
 
 app.include_router(
     form_router.router,
-    prefix='/form',
+    prefix='/api/form',
     tags=['Form Operations'],
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
 
 app.include_router(
     login_router.router,
-    prefix='/login',
+    prefix='/api/login',
     tags=['Login Operations'],
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
 app.include_router(
     register_router.router,
-    prefix='/register',
+    prefix='/api/register',
     tags=['Register Operations'],
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
