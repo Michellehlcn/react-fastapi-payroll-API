@@ -12,6 +12,26 @@ const Table = () => {
   const [loaded, setLoaded] = useState(false);
   const [activeModal, setActiveModal] = useState(false);
   const [id, setId] = useState(null);
+  
+
+  const getId = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    const response = await fetch(`/api/users/me`, requestOptions);
+    if (!response.ok) {
+      setErrorMessage("Something went wrong. Couldn't load the Profiles");
+    } else {
+      const data = await response.json();
+      setId(data.id);
+      console.log(data)
+      
+    }
+  };
 
   const handleUpdate = async (id) => {
     setId(id);
@@ -59,6 +79,7 @@ const Table = () => {
   }, []);
 
   const handleModal = () => {
+    getId();
     setActiveModal(!activeModal);
     getInfor();
     setId();
@@ -97,7 +118,7 @@ const Table = () => {
           </thead>
           <tbody>
             {employees.map((e) => (
-              <tr key={e.id}>
+              <tr key={id}>
                 <td>{e.first_name}</td>
                 <td>{e.last_name}</td>
                 <td>{e.title}</td>

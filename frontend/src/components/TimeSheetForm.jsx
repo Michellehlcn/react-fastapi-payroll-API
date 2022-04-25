@@ -13,10 +13,33 @@ const TimeSheetForm = () => {
   const [activeModal, setActiveModal] = useState(false);
   const [id, setId] = useState(null);
 
+
+
+  const getId = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    const response = await fetch(`/api/users/me`, requestOptions);
+    if (!response.ok) {
+      setErrorMessage("Something went wrong. Couldn't load the Profiles");
+    } else {
+      const data = await response.json();
+      setId(data.id);
+      console.log(data)
+      
+    }
+  };
+
+
   const handleUpdate = async (id) => {
     setId(id);
     setActiveModal(true);
   };
+
 
   const handleDelete = async (id) => {
     const requestOptions = {
@@ -49,6 +72,7 @@ const TimeSheetForm = () => {
       const data = await response.json();
       setInfor(data);
       setLoaded(true);
+      console.log(data)
       
     }
   };
@@ -59,6 +83,7 @@ const TimeSheetForm = () => {
   }, []);
 
   const handleModal = () => {
+    getId();
     setActiveModal(!activeModal);
     getInfor();
     setId();
@@ -97,7 +122,7 @@ const TimeSheetForm = () => {
           </thead>
           <tbody>
             {employees.map((e) => (
-              <tr key={e.id}>
+              <tr key={id}>
                 <td>{e.first_name}</td>
                 <td>{e.last_name}</td>
                 <td>{e.title}</td>

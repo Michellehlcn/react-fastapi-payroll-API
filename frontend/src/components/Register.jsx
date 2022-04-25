@@ -1,9 +1,37 @@
-Import React, { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import DropdownList from "react-widgets/DropdownList";
 import { UserContext } from "../context/UserContext";
 import ErrorMessage from "./ErrorMessage";
+import { useNavigate, Link } from "react-router-dom";
 
 
+import { Button, Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+const useStyles = makeStyles({
+    root: {
+      background: '#fff',
+      width: '40%',
+      'min-width': '320px',
+      'max-width': '475px',
+      padding: '8px',
+      position: 'relative',
+      display: 'flex',
+       'align-items': 'center',
+        'justify-content': 'center',
+    },
+    button: {
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        width:'50%',
+        //position: 'absolute',
+        //top: '70%',
+    },
+    input: {
+        width: '100%',
+        'padding-bottom': '8px'
+    }
+});
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +40,8 @@ const Register = () => {
   const [confirmationPassword, setConfirmationPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [, setToken] = useContext(UserContext);
+  const classes = useStyles();
+  let navigate = useNavigate();
 
   const submitRegistration = async () => {
     const requestOptions = {
@@ -29,6 +59,7 @@ const Register = () => {
       setErrorMessage(data.detail);
     } else {
       setToken(data.access_token);
+      console.log('Sucess:', data);
     }
   };
 
@@ -36,6 +67,8 @@ const Register = () => {
     e.preventDefault();
     if (password === confirmationPassword && password.length > 5) {
       submitRegistration();
+
+      navigate("/login");
     } else {
       setErrorMessage(
         "Ensure that the passwords match and greater than 5 characters"
@@ -45,6 +78,8 @@ const Register = () => {
 
 
   return (
+  <Grid container direction="row" justify="center" alignItems="center" >
+  <Paper className={classes.root}>
     <div className="column">
       <form className="box" id="myform" onSubmit={handleSubmit}>
         <h1 className="title has-text-centered">Register</h1>
@@ -52,6 +87,7 @@ const Register = () => {
           <label className="label">Email Address</label>
           <div className="control">
             <input
+
               type="email"
               placeholder="Enter email"
               value={email}
@@ -107,8 +143,11 @@ const Register = () => {
         <button className="button is-primary" type="submit">
           Register
         </button>
+        <Link to="/login">Login</Link>
       </form>
     </div>
+    </Paper>
+    </Grid>
   );
 };
 

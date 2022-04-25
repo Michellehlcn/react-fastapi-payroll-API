@@ -11,6 +11,19 @@ const PersonalInfor = ({ active, handleModal, token, id, setErrorMessage }) => {
 
   useEffect(() => {
     const getInfor = async () => {
+      const requestOption = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const response1 = await fetch("/api/users/me", requestOption);
+      const data1 = await response1.json();
+      const id = data1.id;
+      console.log(data1);
+      
       const requestOptions = {
         method: "GET",
         headers: {
