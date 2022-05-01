@@ -46,15 +46,23 @@ docker ps
 # Deploy to Heroku by using Docker
 ### Login into Heroku account
 Heroku login
+  
 ### Login into Heroku container:login
 heroku container:login
-### Create new app named: "react-fastapi-payroll" for the backend and "react-fastapi-payroll-frontend"
+  
+### Create new app named: "react-fastapi-payroll" for the backend and "react-fastapi-payroll-frontend" 
 These repos unique so you should create yours accordingly
-### Update the makefile for your heroku API token (Please use the long-lived user authorization) and app names
+  
+### Update the makefile 
+  for your heroku API token (Please use the long-lived user authorization) 
+  and app names
 ### Deploying backend: Run the command lines
 make build-app-heroku --> This will create the Image registry.heroku.com/XXX
+  
 make push-app-heroku
+  
 make release-heroku
+  
 ### Check the app
 heroku ps --app ${Your_App_Name}
   
