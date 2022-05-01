@@ -19,6 +19,9 @@ Jinja2==3.1.1
 MarkupSafe==2.1.1
 orjson==3.6.7
 passlib==1.7.4
+propelauth-fastapi==1.1.0
+propelauth-py==2.0.0
+psycopg2-binary==2.9.3
 pyasn1==0.4.8
 pycparser==2.21
 pydantic==1.9.0
