@@ -18,6 +18,7 @@ const useStyles = makeStyles({
       display: 'flex',
        'align-items': 'center',
         'justify-content': 'center',
+      'margin-top': '100px',
     },
     button: {
         /*background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',*/
@@ -77,7 +78,7 @@ const Login = () => {
 
   return (
   <Grid container direction="row" justify="center" alignItems="center" >
-  <Paper className={classes.root}>
+  <Paper className={classes.root} elevation={0}>
     <div className="column">
       <form className="box" onSubmit={handleSubmit}>
         <h1 className="title has-text-centered">Login</h1>

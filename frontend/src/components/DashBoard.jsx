@@ -3,7 +3,7 @@ import Register from "./Register";
 import Login from "./Login";
 import Table from "./Table";
 import TimeSheetForm from "./TimeSheetForm";
-
+import { Container, Row, Col } from 'reactstrap';
 
 export default function DashBoard() {
   return (
@@ -13,7 +13,17 @@ export default function DashBoard() {
                   <div className="column"></div>
                   <div className="column m-5 is-two-thirds">
                     <div className="columns">
-                     <div><Table /><TimeSheetForm /></div>
+                     <div>
+                         <Container>
+                            <Row>
+                              <Table />
+                            </Row>
+                           
+                            <Row>
+                                <TimeSheetForm />
+                            </Row>
+                          </Container>
+                      </div>
 
                     </div>
                   </div>

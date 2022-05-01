@@ -23,7 +23,7 @@ const PersonalInfor = ({ active, handleModal, token, id, setErrorMessage }) => {
       const data1 = await response1.json();
       const id = data1.id;
       console.log(data1);
-      
+
       const requestOptions = {
         method: "GET",
         headers: {
@@ -31,10 +31,10 @@ const PersonalInfor = ({ active, handleModal, token, id, setErrorMessage }) => {
           Authorization: "Bearer " + token,
         },
       };
-      const response = await fetch(`/api/profile/${id}`, requestOptions);
+      const response = await fetch(`/api/profile`, requestOptions);
 
       if (!response.ok) {
-        setErrorMessage("Could not get the Employee Information");
+        setErrorMessage("Could not get the Your Information");
       } else {
         const data = await response.json();
         setFirstName(data.first_name);

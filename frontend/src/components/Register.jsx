@@ -79,7 +79,7 @@ const Register = () => {
 
   return (
   <Grid container direction="row" justify="center" alignItems="center" >
-  <Paper className={classes.root}>
+  <Paper className={classes.root} elevation={0}>
     <div className="column">
       <form className="box" id="myform" onSubmit={handleSubmit}>
         <h1 className="title has-text-centered">Register</h1>

@@ -31,11 +31,9 @@ class SiteBar extends React.Component {
         this.setState({
             isOpen: !this.state.isOpen
         });
-        this.useNavigate('/login')
+        this.useNavigate('/')
         
     }
-
-
 
     render() {
         let btnTxt = this.state.isOpen ? 'Login' : 'Logout';
@@ -48,21 +46,22 @@ class SiteBar extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/about">About</NavLink>
-                            </NavItem>
-                            <NavItem>
                                 <NavLink href="/register">Registration</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/dashboard">Dashboard</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/admin">Admin</NavLink>
+                                <NavLink href="/admin/">Admin</NavLink>
                             </NavItem>
+
                             <NavItem>
-                                <Button  onClick={e=>this.toggle(e)}>{btnTxt}
+                                <Button  onClick={e=>this.toggle(e)}>
+                                    <NavLink href="/">{btnTxt}
+                                    </NavLink>
                                 </Button>
                             </NavItem>
+
                         </Nav>
                     </Collapse>
                 </Navbar>
