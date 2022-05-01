@@ -34,7 +34,7 @@ npm start
 Please create Docker account
 
 ### Docker login
-docker login -u <UserName>
+docker login -u UserName
   
 ### Run Docker
 docker-compose -f docker-compose.local.yml up -d
