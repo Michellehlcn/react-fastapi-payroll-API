@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Header from "./components/Header";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
@@ -10,10 +11,10 @@ import {RecoilRoot} from 'recoil';
 import { BrowserRouter,Routes, Route } from "react-router-dom";
 
 
-import AboutPage from './components/About';
-import SiteBar from './components/NavBar';
 import AdminPage from './components/AdminPage';
-
+import SiteBar from './components/NavBar';
+import AdminLayout from './components/AdminLayout';
+import AllUsers from "./components/AllUsers";
 /*
 const App = () => {
   const [message, setMessage] = useState("");
@@ -79,15 +80,21 @@ class App extends Component {
 
     <RecoilRoot>
       <BrowserRouter>
-      <SiteBar clickLogOut={this.clickLogOut} isLoggedIn={this.state.isLoggedIn}/>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element= {<Register />} />
-          <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/" element={<Login />} />
-          <Route index={true} path="*" element={<ErrorPage />} />
+          <Route path="/" element={<Header />} >
+              <Route index element={<Login />} />
+              <Route path="register" element= {<Register />} />
+              <Route path="dashboard" element={<DashBoard />} />
+              <Route path="admin/*" element={<AdminLayout />}>
+                  <Route index element={<AdminPage />} />
+                  <Route path='all-users' element={<AllUsers />} />
+                  <Route index={true} path="*" element={<ErrorPage />} />
+                              
+              </Route>
+              <Route index={true} path="*" element={<ErrorPage />} />
+          </Route>
+          
+          
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
