@@ -13,7 +13,7 @@ cd ./frontend/src && npm install
 
 ### Start app
 ### Run api
-cd ./backend && uvicorn main:app -- reload
+cd ./backend/app/app && uvicorn main:app -- reload
 
 ### Run react
 npm start 
