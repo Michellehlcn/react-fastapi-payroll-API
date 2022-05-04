@@ -1,11 +1,13 @@
-import React, { useContext, useState } from "react";
-import DropdownList from "react-widgets/DropdownList";
-import { UserContext } from "../context/UserContext";
-import ErrorMessage from "./ErrorMessage";
+import React, { useState } from "react";
+//import DropdownList from "react-widgets/DropdownList";
+//import { UserContext } from "../context/UserContext";
+//import ErrorMessage from "./ErrorMessage";
 import { useNavigate, Link } from "react-router-dom";
+import FastAPIClient from '../client';
+import config from '../config';
+import Button from './Button';
 
-
-import { Button, Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -20,6 +22,7 @@ const useStyles = makeStyles({
       display: 'flex',
        'align-items': 'center',
         'justify-content': 'center',
+        'margin-top': '100px',
     },
     button: {
         background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -33,65 +36,112 @@ const useStyles = makeStyles({
     }
 });
 
+// const Register = () => {
+//   const [email, setEmail] = useState("");
+//   const [role, setRole] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [confirmationPassword, setConfirmationPassword] = useState("");
+//   const [errorMessage, setErrorMessage] = useState("");
+//   const [, setToken] = useContext(UserContext);
+//   const classes = useStyles();
+//   let navigate = useNavigate();
+
+//   const submitRegistration = async () => {
+//     const requestOptions = {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ "email": email, "password": password, "role": role.toString()}),
+//     };
+
+//     const response = await fetch("/api/users", requestOptions);
+//     const data = await response.json();
+//     console.log(requestOptions)
+
+
+//     if (!response.ok) {
+//       setErrorMessage(data.detail);
+//     } else {
+//       setToken(data.access_token);
+//       console.log('Sucess:', data);
+//     }
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (password === confirmationPassword && password.length > 5) {
+//       submitRegistration();
+
+//       navigate("/");
+//     } else {
+//       setErrorMessage(
+//         "Ensure that the passwords match and greater than 5 characters"
+//       );
+//     }
+//   };
+const client = new FastAPIClient(config);
+
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmationPassword, setConfirmationPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [, setToken] = useContext(UserContext);
   const classes = useStyles();
-  let navigate = useNavigate();
+  const [error, setError] = useState({ email: '', role: '', password: '', confirmationPassword: '' });
+  const [registerForm, setRegisterForm] = useState({ email: '', role: '',password: '', confirmationPassword: '' });
 
-  const submitRegistration = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ "email": email, "password": password, "role": role.toString()}),
-    };
+  const [loading, setLoading] = useState(false)
 
-    const response = await fetch("/api/users", requestOptions);
-    const data = await response.json();
-    console.log(requestOptions)
+  const navigate = useNavigate()
 
-
-    if (!response.ok) {
-      setErrorMessage(data.detail);
-    } else {
-      setToken(data.access_token);
-      console.log('Sucess:', data);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const onRegister = (e) => {
     e.preventDefault();
-    if (password === confirmationPassword && password.length > 5) {
-      submitRegistration();
+    setLoading(true)
+    setError(false);
 
-      navigate("/login");
-    } else {
-      setErrorMessage(
-        "Ensure that the passwords match and greater than 5 characters"
-      );
+    
+    if(registerForm.role <= 0)
+    {
+      setLoading(false)
+      return setError({role: "Please Select Your Role"}) 
     }
-  };
+    if(registerForm.email.length <= 0)
+    {
+      setLoading(false)
+      return setError({email: "Please Enter Email Address"}) 
+    }
+    if(registerForm.password.length <5)
+    {
+      setLoading(false)
+      return setError({password: "Please Enter Password greater than 5 characters"})
+    }
+    if(registerForm.confirmationPassword !== registerForm.password  && registerForm.password.length <5 )
+    {
+      setLoading(false)
+      return setError({confirmationPassword: "Ensure that the passwords match and greater than 5 characters"}) 
+    }
 
+    client.register(registerForm.email, registerForm.password)
+      .then( () => {
+        navigate('/')
+      })
+      .catch( (err) => {
+        setLoading(false)
+        setError(true);
+        alert(err)
+      });
+  }
 
   return (
   <Grid container direction="row" justify="center" alignItems="center" >
   <Paper className={classes.root} elevation={0}>
     <div className="column">
-      <form className="box" id="myform" onSubmit={handleSubmit}>
+      <form className="box" id="myform" onSubmit={(e) => onRegister(e)}>
         <h1 className="title has-text-centered">Register</h1>
         <div className="field">
           <label className="label">Email Address</label>
           <div className="control">
             <input
-
               type="email"
               placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              error={error.email}
+              value={registerForm.email}
+              onChange={(e) => setRegisterForm({...registerForm, email: e.target.value })}
               className="input"
               required
             />
@@ -103,8 +153,10 @@ const Register = () => {
           <label className="label">Select Role</label>
           <div className="control">
           <select
-            value={role.toString()}
-            onChange={(e) => setRole(e.target.value)}>
+            value={registerForm.role.toString()}
+            error={error.email}
+            onChange={(e) => setRegisterForm({...registerForm, role: e.target.value })}
+            >
             <option value="manager">Manager</option>
             <option value="trainer">Trainer</option>
           </select>
@@ -117,8 +169,9 @@ const Register = () => {
             <input
               type="password"
               placeholder="Enter password"
-              value={password.toString()}
-              onChange={(e) => setPassword(e.target.value)}
+              error={error.password}
+              value={registerForm.password.toString()}
+              onChange={(e) => setRegisterForm({...registerForm, password: e.target.value })} 
               className="input"
               required
             />
@@ -131,19 +184,20 @@ const Register = () => {
             <input
               type="password"
               placeholder="Enter password"
-              value={confirmationPassword}
-              onChange={(e) => setConfirmationPassword(e.target.value)}
+              error={error.confirmationPassword}
+              value={registerForm.confirmationPassword.toString()}
+              onChange={(e) => setRegisterForm({...registerForm, confirmationPassword: e.target.value })} 
               className="input"
               required
             />
           </div>
         </div>
-        <ErrorMessage message={errorMessage} />
         <br />
-        <button className="button is-primary" type="submit">
-          Register
-        </button>
-        <Link to="/login">Login</Link>
+        <Button title={"Create Account"} error={error.password} loading={loading} /> 
+        <footer>
+            <Link className="text-teal-700 hover:text-blue-900 text-sm float-right" to="/">Already Have an account ?</Link>
+            <br />
+        </footer>
       </form>
     </div>
     </Paper>
