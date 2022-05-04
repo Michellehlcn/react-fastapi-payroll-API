@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Form, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+from pydantic import AnyHttpUrl
 
-from typing import List
+from typing import List, Optional
 import fastapi as _fastapi
 import fastapi.security as _security
 import sqlalchemy.orm as _orm
@@ -16,7 +17,7 @@ from models.form_model import Form
 Base.metadata.create_all(bind=engine)
 
 # routes imports
-from routes import (user_router, trainer_router, form_router, login_router, register_router)
+from routes import (user_router, trainer_router, form_router)
 
 import services.user_service as _services
 import schemas.user_schema as _schemas
@@ -32,17 +33,31 @@ app = FastAPI(
     redoc_url='/',
     debug=True,
     )
-'''
-origins = ["http://localhost:3000"]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)'''
-
+BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
+        "http://localhost:3000",
+        "http://localhost:8000",  # type: ignore
+        "https://react-fastapi-payroll.herokuapp.com"
+    ]
+BACKEND_CORS_ORIGIN_REGEX: Optional[
+        str
+    ] = "https.*\.(netlify.app|herokuapp.com)"  # noqa: W605
+if BACKEND_CORS_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[str(origin) for origin in BACKEND_CORS_ORIGINS],
+        allow_origin_regex=BACKEND_CORS_ORIGIN_REGEX,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+#origins = ["http://localhost:3000"]
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 app.include_router(
     user_router.router,
     prefix='/api/users',
@@ -52,7 +67,7 @@ app.include_router(
 
 app.include_router(
     trainer_router.router,
-    prefix='/api/profile',
+    prefix='/api/trainers/profile',
     tags=['Trainers Operations'],
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
@@ -64,18 +79,7 @@ app.include_router(
     responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
 )
 
-app.include_router(
-    login_router.router,
-    prefix='/api/login',
-    tags=['Login Operations'],
-    responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
-)
-app.include_router(
-    register_router.router,
-    prefix='/api/register',
-    tags=['Register Operations'],
-    responses={200:{'description':'Ok'}, 201:{'description':'Created'}, 400:{'description':'Bad Request'}, 401:{'desription':'Unauthorized'}}
-)
+
 @app.get("/api")
 async def root():
     return {"message": "Payroll API Application"}
