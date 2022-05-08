@@ -28,9 +28,6 @@ npm start
 
 ### Filing Timesheet Form
 
-### Admin Dashboard
-![Screen Shot 2022-04-19 at 7 35 51 am](https://user-images.githubusercontent.com/83108919/163883933-bd17a4df-b257-4e69-8e4a-f197a9b2ae32.png)
-
 ### Admin Page View
 ![Screen Shot 2022-05-09 at 12 12 56 am](https://user-images.githubusercontent.com/83108919/167300385-e6ca3efc-8482-41f9-bde7-87bf0c0c708b.png)
 
