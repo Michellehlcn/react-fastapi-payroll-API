@@ -92,7 +92,7 @@ const Login = () => {
   const onLogin = (e) => {
     e.preventDefault();
     setError(false);
-    setLoading(true)
+    setLoading(true);
 
     if(loginForm.email.length <= 0)
     {

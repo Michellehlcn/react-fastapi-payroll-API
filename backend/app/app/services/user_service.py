@@ -57,6 +57,12 @@ class UserService:
             return False
 
         return user
+    
+    def read_trainers(user: user_schema.User,db:_orm.Session):
+        """return a list of all users from the database """
+        record = db.query(Trainer).filter_by(owner_id=user.id)
+        return list(map(TrainerOut.from_orm, record))
+
 
     # create post
     @staticmethod 

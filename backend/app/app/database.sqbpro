@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/michelle/Downloads/Airtaskers/python_API_payroll/fastapi/backend/app/app/database.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3386"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,27:mainALG_timetable_import_sample"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="ALG_timetable_import_sample" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="74"/><column index="2" value="75"/><column index="3" value="71"/><column index="4" value="79"/><column index="5" value="95"/><column index="6" value="235"/><column index="7" value="180"/><column index="8" value="169"/><column index="9" value="131"/><column index="10" value="180"/><column index="11" value="162"/><column index="12" value="167"/><column index="13" value="133"/><column index="14" value="126"/><column index="15" value="106"/><column index="16" value="119"/><column index="17" value="80"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="form" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="18"/><column index="2" value="84"/><column index="3" value="52"/><column index="4" value="55"/><column index="5" value="67"/><column index="6" value="78"/><column index="7" value="65"/><column index="8" value="127"/><column index="9" value="124"/><column index="10" value="149"/><column index="11" value="162"/><column index="12" value="145"/><column index="13" value="103"/><column index="14" value="106"/><column index="15" value="87"/><column index="16" value="115"/><column index="17" value="78"/><column index="18" value="75"/><column index="19" value="53"/><column index="20" value="54"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE IF NOT EXISTS &quot;ALG_timetable_import_sample&quot; (
+    &quot;CAMPUS&quot; TEXT,
+    &quot;DAY&quot; TEXT,
+    &quot;AM_PM_EVE&quot; TEXT,
+    &quot;TIME&quot; TEXT,
+    &quot;COURSE&quot; TEXT,
+    &quot;SUBJECT&quot; TEXT,
+    &quot;GROUP&quot; TEXT,
+    &quot;TRAINER_FULL_NAME&quot; TEXT,
+    &quot;ZOOM_ID_FOR_TRAINER&quot; TEXT,
+    &quot;ZOOM_PASSWORD_FOR_TRAINER&quot; TEXT,
+    &quot;ZOOM_LINK_FOR_STUDENTS&quot; TEXT,
+    &quot;CAMPUS_ROOM_No_CAPACITY&quot; TEXT,
+    &quot;CLASSROOM_CAPACITY&quot; INT,
+    &quot;NUMBER_OF_STUDENT&quot; INT,
+    &quot;STUDENT_PROFILE&quot; TEXT,
+    &quot;Class_Size_Utilisation&quot; NUMERIC(17, 16),
+    &quot;Unique_Group&quot; TEXT
+);
+INSERT INTO &quot;ALG_timetable_import_sample&quot; VALUES
+    ('SYDNEY','MONDAY','AM','09:30 - 01:00','DIP CS/MH','Diverse Clients','22T1_SYD_01_MON TUE','Amanpreet Kaur ','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Kent St - Room 3 - 30',30,27,'1st-3rd termer',0.9,'YES'),
+    ('SYDNEY','TUESDAY','PM','01:15 - 04:45','CIII ECEC(OLD)','Nurturing Children','22T1_SYD_01_MON TUE','Jagriti Sethi','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Kent St - Room 5 - 22',22,18,'2nd termer',0.8181818181818182,NULL),
+    ('SYDNEY','WEDNESDAY','EVE','05:30 - 09:00','DIP ECEC(OLD)','Curriculm Design','22T1_SYD_02_EVE','Proawpattra Jaisaen','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Kent St - Room 8 - 35',35,18,'3rd termer',0.5142857142857142,NULL),
+    ('SYDNEY','THURSDAY','AM','08:30 - 12:00','CIV Massage','Health Science A (1-3T)','22T1_SYD_01_WED THU','Patrick De Permentier','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Clarence St - Room 3 - 22',22,22,'1st-3rd termer',1,NULL),
+    ('SYDNEY','FRIDAY','PM','01:30 - 05:30','DIP Massage','Massage Clinic C','22T1_SYD_02_WK6-10_FRI_4th-6th','Roberta Lopasso &amp; Carlos Kaiser','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Clarence St - Room 4 - 25',25,19,'4th-6th termer',0.76,NULL),
+    ('MELBOURNE','MONDAY','AM','09:00 - 12:30','DIP ECEC(NEW)','Leadership in Early Childhood Education','22T1_MEL_01_MON TUE','Andila Rajiah','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Bourke St - Room 4 - 30  ',30,27,'1st termer',0.9,'YES'),
+    ('MELBOURNE','TUESDAY','PM','01:15 - 04:45','DIP ECEC(NEW)','Leadership in Early Childhood Education','22T1_MEL_01_MON TUE','Andila Rajiah','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Bourke St - Room 4 - 30  ',30,27,'1st termer',0.9,' '),
+    ('MELBOURNE','WEDNESDAY','AM','09:30 - 01:00','DIP CNSL/CS/MH','Diverse Clients','22T1_MEL_03_WED THU','Karen Harrison','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Bourke St - Room 2 - 28',28,21,'1st-3rd termer',0.75,'YES'),
+    ('MELBOURNE','THURSDAY','PM','01:45 - 05:15','DIP CNSL','Counselling Specialisation','22T1_MEL_01_WED THU','Marsha Rosenbaum','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Bouverie St - Room 100 - 14',14,13,'4th-5th termer',0.9285714285714286,' '),
+    ('MELBOURNE','FRIDAY','AM','08:45 - 12:45','DIP Massage','Massage Clinic C','22T1_MEL_02_WK6-10_FRI_4th-6th','Christian Binder/Emma Inglis','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Bourke St - Room 4 - 30  ',30,16,'4th-6th termer',0.5333333333333333,' '),
+    ('BRISBANE','MONDAY','AM','09:00 - 12:30','DIP ECEC(OLD)','Curriculm Design','22T1_BRI_01_MON TUE','Chris Major','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Edward St - Meeting Room - 7',5,4,'3rd termer',0.8,'YES'),
+    ('BRISBANE','TUESDAY','PM','01:15 - 04:45','DIP ECEC(OLD)','Curriculm Design','22T1_BRI_01_MON TUE','Chris Major','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Edward St - Meeting Room - 7',5,4,'3rd termer',0.8,NULL),
+    ('BRISBANE','WEDNESDAY','AM','08:30 - 12:00','CIV YOGA','The Yoga Business','22T1_BRI_01_WED THU','Estefania Maiztegui','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Edward St - Room 3 - 23',23,17,'1st-4th termer',0.7391304347826086,'YES'),
+    ('BRISBANE','THURSDAY','AM','08:30 - 12:00','CIV YOGA','Healthy Bodies Theory','22T1_BRI_01_WED THU','Cassie White','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Edward St - Room 2 - 23',23,17,'1st-4th termer',0.7391304347826086,NULL),
+    ('BRISBANE','FRIDAY','PM','01:30 - 05:30','DIP Massage','Massage Clinic C','22T1_BRI_02_WK6-10_FRI_4th-6th','Rebecca Clark','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Edward St - Room 3 - 23',23,13,'4th-6th termer',0.5652173913043478,NULL),
+    ('PERTH','MONDAY','PM','01:00 - 04:30','CIV FIT','Cycle A Theory ','22T1_PER_01_MON TUE','Lucas Richmond','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Wembley Court - Room 1 - 24',24,13,'1st-3rd termer',0.5416666666666666,'YES'),
+    ('PERTH','TUESDAY','PM','01:00 - 04:30','CIV FIT','Cycle A Theory ','22T1_PER_01_MON TUE','Lucas Richmond','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Wembley Court - Room 1 - 24',24,13,'1st-3rd termer',0.5416666666666666,NULL),
+    ('PERTH','WEDNESDAY','PM','01:00 - 04:30','DRSM FIT','Advanced Personal Training(Theory+Practical)','22T1_PER_01_WED THU','Tyson Munro','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Wembley Court - Room 1 - 24',24,9,'1st-4th termer',0.375,NULL),
+    ('PERTH','THURSDAY','AM','08:30 - 12:00','DRSM FIT','Human Resource Management','22T1_PER_01_WED THU','Keith English','Zoom9999@alg.edu.au','abcdefg','https://zoom.us/j/9281180347?','Wembley Court - Room 1 - 24',24,8,'1st-4th termer',0.3333333333333333,NULL);
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
