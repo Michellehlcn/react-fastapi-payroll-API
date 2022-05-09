@@ -61,11 +61,14 @@ class FastAPIClient {
       is_active: true,
     };
 
-    return this.apiClient.post('/users', loginData).then(
-        (resp) => {
+    return this.apiClient
+    .post('/users', loginData)
+    .then((resp) => {
           console.log(resp.data);
           return resp.data;
-        });
+        })
+    .catch(error => console.log(error))
+  ;
   }
 
   // Logging out is just deleting the jwt.
@@ -98,10 +101,9 @@ class FastAPIClient {
     });
   }
 
-  getUserRecipes() {
-    return this.apiClient.get(`/recipes/my-recipes/`).then(({data}) => {
-      return data;
-    });
+  getUsers() {
+    return this.apiClient.get(`/users/all-users`);
+    
   }
 
   createRecipe(label, url, source, submitter_id) {

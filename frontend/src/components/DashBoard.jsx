@@ -14,15 +14,7 @@ export default function DashBoard() {
                   <div className="column m-5 is-two-thirds">
                     <div className="columns">
                      <div>
-                         <Container>
-                            <Row>
-                              <Table />
-                            </Row>
-                           
-                            <Row>
-                                <TimeSheetForm />
-                            </Row>
-                          </Container>
+                         <h1> DashBoard</h1>
                       </div>
 
                     </div>

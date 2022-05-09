@@ -165,7 +165,9 @@ async def get_user(user: _schemas.User = _fastapi.Depends(get_current_user)):
     user = verify_role(required_role=['manager'],user = user)
     return user
 
-
+@router.get("/all-users")
+async def get_users(db: _orm.Session = _fastapi.Depends(_database.get_db)):  
+    return UserService.get_users(db=db)
 
 #Super user role
 class RoleChecker:

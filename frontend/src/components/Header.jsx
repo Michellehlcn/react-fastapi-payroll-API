@@ -40,8 +40,11 @@ function Header (){
     }
   }, [])
   const handleLogout = () => {
+    setIsLoggedIn(false);
     client.logout();
-    setIsLoggedIn(false)
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+
     navigate('/')
   }
 

@@ -14,6 +14,7 @@ import { BrowserRouter,Routes, Route } from "react-router-dom";
 import AdminPage from './components/AdminPage';
 import AdminLayout from './components/AdminLayout';
 import AllUsers from "./components/AllUsers";
+import AdminPageTimeSheet from "./components/AdminPage.TimeSheet";
 /*
 const App = () => {
   const [message, setMessage] = useState("");
@@ -53,19 +54,17 @@ class App extends Component {
 
 /*function App () {*/
     return (
-
-  
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Header />} >
               <Route index element={<Login />} />
               <Route path="register" element= {<Register />} />
-              <Route path="dashboard" element={<AdminPage />} />
-              <Route path="admin/*" element={<AdminLayout />}>
+              <Route path="dashboard" element={<DashBoard />} />
+              {/*<Route path="admin" element={<AdminPage />} />*/}
+             <Route path="admin/" element={<AdminLayout />}>
                   <Route index element={<AdminPage />} />
-                  <Route path='all-users' element={<AllUsers />} />
-                  <Route index={true} path="*" element={<ErrorPage />} />
-                              
+                  <Route path='all-timesheets' element={<AdminPageTimeSheet />} />
+                  <Route index={true} path="*" element={<ErrorPage />} />                          
               </Route>
               <Route index={true} path="*" element={<ErrorPage />} />
           </Route>

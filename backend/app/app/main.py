@@ -33,14 +33,13 @@ app = FastAPI(
     redoc_url='/',
     debug=True,
     )
-BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
+'''BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
         "http://localhost:3000",
         "http://localhost:8000",  # type: ignore
         "https://react-fastapi-payroll.herokuapp.com"
     ]
 BACKEND_CORS_ORIGIN_REGEX: Optional[
-        str
-    ] = "https.*\.(netlify.app|herokuapp.com)"  # noqa: W605
+        str] = "https.*\.(netlify.app|herokuapp.com)"  # noqa: W605
 if BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
@@ -49,7 +48,7 @@ if BACKEND_CORS_ORIGINS:
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
-    )
+    )'''
 #origins = ["http://localhost:3000"]
 # app.add_middleware(
 #     CORSMiddleware,
