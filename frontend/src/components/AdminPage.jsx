@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter,Routes, Route, NavLink } from "react-router-dom";
 
 import Loader from "./Loader.jsx";
-import AllUsers, {SelectColumnFilter,StatusPill } from "./AllUsers.jsx";
+import AdminPageAllUsers, {SelectColumnFilter,StatusPill } from "./AdminPage.AllUsers.jsx";
 
 import FastAPIClient from '../client';
 import config from '../config';
@@ -107,7 +107,7 @@ const AdminPage = () => {
                     <h1 className="text-xl font-semibold">All Users</h1>
                   </div>
                     <div className="mt-4">
-                         <AllUsers columns={columns} data={data} />
+                         <AdminPageAllUsers columns={columns} data={data} />
                     </div>
                </main>
           </div>

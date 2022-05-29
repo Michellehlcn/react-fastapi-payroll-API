@@ -109,7 +109,7 @@ export function AvatarCell({ value, column, row }) {
   )
 }
 
-function AllUsers({ columns, data }) {
+function AdminPageAllUsers({ columns, data }) {
   // Use the state and functions returned from useTable to build your UI
   const { 
     getTableProps, 
@@ -294,7 +294,7 @@ function AllUsers({ columns, data }) {
 }
 
 
-export default AllUsers;
+export default AdminPageAllUsers;
   
 
   

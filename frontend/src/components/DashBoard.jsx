@@ -1,27 +1,59 @@
-import React from "react";
-import Register from "./Register";
-import Login from "./Login";
-import Table from "./Table";
+import React, { Component } from "react";
+import { Col, Container, Row } from "reactstrap";
+import TimeSheetList from "./TimeSheetList";
 import TimeSheetForm from "./TimeSheetForm";
-import { Container, Row, Col } from 'reactstrap';
+import { TextField, Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export default function DashBoard() {
-  return (
-    <>
+import FastAPIClient from '../client';
+import config from '../config';
 
-    <div className="columns">
-                  <div className="column"></div>
-                  <div className="column m-5 is-two-thirds">
-                    <div className="columns">
-                     <div>
-                         <h1> DashBoard</h1>
-                      </div>
+const client = new FastAPIClient(config);
+class DashBoard extends Component {
+  state = {
+    timesheets: []
+  };
 
-                    </div>
-                  </div>
-                  <div className="column"></div>
-              </div>
+  componentDidMount() {
+    this.resetState();
+  }
 
-    </>
+  getTS = () => {
+    client.getTimeSheet()
+    .then(res => {
+      this.setState({ timesheets: res.data });
+      console.log(res);
+    });
+  };
+
+  resetState = () => {
+    this.getTS();
+  };
+ 
+  render() {
+    return (
+      <Container style={{ marginTop: "20px" }}>
+        
+            <Paper elevation={2} style={{ marginTop: "20px", padding: '15px' }}>
+                <Row>
+                  <Col>
+                    <TimeSheetForm />
+                  </Col>
+                </Row>
+            </Paper>
+            <Paper elevation={2} style={{ marginTop: "20px", padding: '15px' }}>
+                <Row>
+                  <Col>
+                    <TimeSheetList
+                      timesheets={this.state.timesheets}
+                      resetState={this.resetState}
+                    />
+                  </Col>
+                </Row>
+              </Paper>
+      </Container>
     );
+  }
 }
+
+export default DashBoard;

@@ -23,6 +23,7 @@ const useStyles = makeStyles({
        'align-items': 'center',
         'justify-content': 'center',
       'margin-top': '100px',
+      'margin-bottom': '100px',
     },
     button: {
         /*background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',*/

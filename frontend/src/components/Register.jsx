@@ -9,7 +9,7 @@ import Button from './Button';
 
 import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { Form, Input } from "reactstrap";
 
 const useStyles = makeStyles({
     root: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
        'align-items': 'center',
         'justify-content': 'center',
         'margin-top': '100px',
+        'margin-bottom': '100px',
     },
     button: {
         background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -84,14 +85,13 @@ const Register = () => {
   const classes = useStyles();
   const [error, setError] = useState({ email: '', role: '', password: '', confirmationPassword: '' });
   const [registerForm, setRegisterForm] = useState({ email: '', role: '',password: '', confirmationPassword: '' });
-
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
   const onRegister = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     setError(false);
 
     
@@ -115,28 +115,31 @@ const Register = () => {
       setLoading(false)
       return setError({confirmationPassword: "Ensure that the passwords match and greater than 5 characters"}) 
     }
-
-    client.register(registerForm.email, registerForm.password)
-      .then( () => {
+    console.log(registerForm.email);
+    client.register(registerForm.email, registerForm.password, registerForm.role)
+      .then( (res) => {
+        setLoading(true);
+        console.log(res);
         navigate('/')
       })
       .catch( (err) => {
-        setLoading(false)
+        setLoading(false);
         setError(true);
-        alert(err)
+        console.log(err);
+        
       });
-  }
+  };
 
   return (
   <Grid container direction="row" justify="center" alignItems="center" >
   <Paper className={classes.root} elevation={0}>
     <div className="column">
-      <form className="box" id="myform" onSubmit={(e) => onRegister(e)}>
+      <form className="box" onSubmit={(e) => onRegister(e)}>
         <h1 className="title has-text-centered">Register</h1>
         <div className="field">
           <label className="label">Email Address</label>
           <div className="control">
-            <input
+            <Input
               type="email"
               placeholder="Enter email"
               error={error.email}
@@ -152,25 +155,27 @@ const Register = () => {
         <div className="field">
           <label className="label">Select Role</label>
           <div className="control">
-          <select
-            value={registerForm.role.toString()}
-            error={error.email}
+          <Input
+            type="select"
+            value={registerForm.role}
+            error={error.role}
             onChange={(e) => setRegisterForm({...registerForm, role: e.target.value })}
             >
+            <option></option>
             <option value="manager">Manager</option>
             <option value="trainer">Trainer</option>
-          </select>
+          </Input>
           </div>
         </div>
         
         <div className="field">
           <label className="label">Password</label>
           <div className="control">
-            <input
+            <Input
               type="password"
               placeholder="Enter password"
               error={error.password}
-              value={registerForm.password.toString()}
+              value={registerForm.password}
               onChange={(e) => setRegisterForm({...registerForm, password: e.target.value })} 
               className="input"
               required
@@ -181,11 +186,11 @@ const Register = () => {
         <div className="field">
           <label className="label">Confirm Password</label>
           <div className="control">
-            <input
+            <Input
               type="password"
               placeholder="Enter password"
               error={error.confirmationPassword}
-              value={registerForm.confirmationPassword.toString()}
+              value={registerForm.confirmationPassword}
               onChange={(e) => setRegisterForm({...registerForm, confirmationPassword: e.target.value })} 
               className="input"
               required
@@ -193,15 +198,15 @@ const Register = () => {
           </div>
         </div>
         <br />
-        <Button title={"Create Account"} error={error.password} loading={loading} /> 
+        <Button title={"Create Account"}  loading={loading} error={error.password}/> 
         <footer>
             <Link className="text-teal-700 hover:text-blue-900 text-sm float-right" to="/">Already Have an account ?</Link>
             <br />
         </footer>
       </form>
-    </div>
-    </Paper>
-    </Grid>
+      </div>
+  </Paper>
+</Grid>
   );
 };
 

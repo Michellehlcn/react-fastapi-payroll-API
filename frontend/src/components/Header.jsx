@@ -31,19 +31,18 @@ function Header (){
   useEffect(() => {
     const tokenString = localStorage.getItem("token")
   if (tokenString) {
+        setIsLoggedIn(true)
         console.log(tokenString)
-        const token = JSON.parse(tokenString)
-        const decodedAccessToken = jwtDecode(token.access_token)
+        // const token = JSON.parse(tokenString)
+        // const decodedAccessToken = jwtDecode(token.access_token)
         //if(moment.unix(decodedAccessToken.exp).toDate() > new Date()){
-            setIsLoggedIn(true)
+            // setIsLoggedIn(true)
         //}
     }
   }, [])
   const handleLogout = () => {
     setIsLoggedIn(false);
     client.logout();
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
 
     navigate('/')
   }
@@ -60,8 +59,6 @@ function Header (){
     } else {
       displayButton = <button className={buttonStyle} onClick={() => handleLogin()}>Login</button>;
     }
-
-
 
   return (
     <><div class="flex flex-col justify-between h-screen">
@@ -94,15 +91,12 @@ function Header (){
                     to={`/register`}>
                     Create Account
                 </Link>}
-
             </div>
             <div>
               {displayButton}
             </div>
         </div>
       </nav>
-
-
       <Outlet />
       <Footer />
     </div>
