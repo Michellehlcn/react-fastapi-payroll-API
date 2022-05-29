@@ -27,7 +27,7 @@ class Form(_database.Base):
     number_of_student =_sql.Column(_sql.Integer)
     student_profile =_sql.Column(_sql.String)
     class_size_utilization =_sql.Column(_sql.String)
-    unique_group = _sql.Column(_sql.Boolean(), default=False, nullable=False)
+    unique_group = _sql.Column(_sql.Boolean(), default=False)
 
     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
     is_active = _sql.Column(_sql.Boolean(), default=True, nullable=False)

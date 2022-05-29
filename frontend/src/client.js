@@ -54,15 +54,15 @@ class FastAPIClient {
     .catch(error => console.log(error))
   ;}
 
-  register(email, password, fullName) {
+  register(email, password, role) {
     const loginData = {
       email,
       password,
-      is_active: true,
+      role,
     };
 
     return this.apiClient
-    .post('/users', loginData)
+    .post(`/users`, loginData)
     .then((resp) => {
           console.log(resp.data);
           return resp.data;
@@ -91,34 +91,50 @@ class FastAPIClient {
     return client;
   }
 
+  // AdminPage - Get all users -- That's work
+  getUsers() {
+    return this.apiClient.get(`/users/all-users`);   
+  }
+
+
   getTrainer(Id) {
     return this.apiClient.get(`/trainers/profile/${Id}`);
   }
 
-  getTrainers(keyword) {
-    return this.apiClient.get(`/trainers/profile/search/?keyword=${keyword}&max_results=10`).then(({data}) => {
-      return data;
-    });
-  }
 
-  getUsers() {
-    return this.apiClient.get(`/users/all-users`);
-    
-  }
 
-  createRecipe(label, url, source, submitter_id) {
-    const recipeData = {
-      label,
-      url,
-      source,
-      submitter_id: submitter_id,
+  // Get Timesheet
+  getTimeSheet() {
+    return this.apiClient.get(`/form/timesheets`);
+  }
+  // Create Timesheet
+  createTimeSheet(subject, campus, day, am_pm_eve, time, course, group) {
+    const TimeSheetData = {
+      subject,
+      campus,
+      day,
+      am_pm_eve,
+      time,
+      course, 
+      group,
     };
-    return this.apiClient.post(`/recipes/`, recipeData);
+    return this.apiClient
+    .post(`/form/post-a-timesheet`, TimeSheetData)
+    .then((resp) => {
+      console.log(resp.data);
+      return resp.data;
+    })
+    .catch(error => console.log(error))
+    ;
+    }
+  
+
+
+  deleteTimeSheet() {
+    return this.apiClient.delete(`/form/delete-a-timesheet`);
   }
-
-
-  deleteRecipe(recipeId) {
-    return this.apiClient.delete(`/recipes/${recipeId}`);
+  editTimeSheet() {
+    return this.apiClient.delete(`/form/delete-a-timesheet`);
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Table } from "reactstrap";
 
-class AdminPageTimeSheet extends Component {
+class TimeSheetList extends Component {
   render() {
     const timesheets = this.props.timesheets;
     return (
@@ -44,4 +44,4 @@ class AdminPageTimeSheet extends Component {
   }
 }
 
-export default AdminPageTimeSheet;
+export default TimeSheetList;

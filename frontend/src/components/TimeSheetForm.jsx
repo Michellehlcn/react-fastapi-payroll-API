@@ -1,223 +1,279 @@
-import React, { useContext, useEffect, useState } from "react";
-import moment from "moment";
+import React, { useState } from "react";
+import { Button, Form, FormGroup, Input, Label, Row, Col } from "reactstrap";
+import FastAPIClient from '../client';
+import config from '../config';
 
-import ErrorMessage from "./ErrorMessage";
-import PersonalInfor from "./TimeSheet";
-import { UserContext } from "../context/UserContext";
-
-import { TextField, Button, Grid, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, Row, Col } from 'reactstrap';
-
-const useStyles = makeStyles({
-    root: {
-      /*background: '#fff',*/
-      width: '100%',
-
-      padding: '8px',
-      position: 'relative',
-      display: 'flex',
-       'align-items': 'center',
-        'justify-content': 'center',
-        'margin-top': '50px',
-    },
-    button: {
-        /*background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',*/
-        width:'50%',
-        //position: 'absolute',
-        //top: '70%',
-    },
-    input: {
-        width: '100%',
-        'padding-bottom': '8px'
-    }
-});
+const client = new FastAPIClient(config);
 const TimeSheetForm = () => {
-  const classes = useStyles();
-  const [token] = useContext(UserContext);
-  const [timesheets, setInfor] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [activeModal, setActiveModal] = useState(false);
-  const [id, setId] = useState(null);
+  const [error, setError] = useState({ subject: '', course: '', campus: '', day: '', am_pm_eve: '', time: '', group: ''});
+  const [timesheet, setTimesheet] = useState({ subject: '', course: '', campus: '', day: '', am_pm_eve: '', time: '', group: ''});
+  
+  const onTimesheet = (e) => {
+    e.preventDefault();
+    setError(false);
+  
+    client.createTimeSheet(timesheet.subject, timesheet.campus, timesheet.day, timesheet.am_pm_eve, timesheet.time, timesheet.course, timesheet.group)
+    .then( () => {
+      console.log('successfully create timesheet!')
+    })
+    .catch( (err) => {
+      console.log(err);
+      setError(true);
+      alert(err)
+  });
+}
+  // state = {
+  //   id: "",
+  //   name: "",
+  //   email: "",
+  //   document: "",
+  //   phone: ""
+  // };
 
-
-
-  const getId = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    const response = await fetch(`/api/users/me`, requestOptions);
-    if (!response.ok) {
-      setErrorMessage("Something went wrong. Couldn't load the Profiles");
-    } else {
-      const data = await response.json();
-      setId(data.id);
-      console.log(data)
-      
-    }
-  };
-
-
-  const handleUpdate = async (id) => {
-    setId(id);
-    setActiveModal(true);
-  };
-
-
-  const handleDelete = async (id) => {
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    const response = await fetch(`/api/profile/${id}`, requestOptions);
-    if (!response.ok) {
-      setErrorMessage("Failed to delete profiles");
-    }
-
-    getInfor();
-  };
-
-  const getInfor = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    const response = await fetch(`/api/profile/${id}`, requestOptions);
-    if (!response.ok) {
-      setErrorMessage("Something went wrong. Couldn't load the Profiles");
-    } else {
-      const data = await response.json();
-      setInfor(data);
-      setLoaded(true);
-      console.log(data)
-      
-    }
-  };
-
-  useEffect(() => {
-    getInfor();
-    // eslint-disable-next-line
-  }, []);
-
-  const handleModal = () => {
-    getId();
-    setActiveModal(!activeModal);
-    getInfor();
-    setId();
-  };
+  // componentDidMount() {
+  //     const { id, name, document, email, phone } = this.props.timesheet;
+  //     this.setState({ id, name, document, email, phone });
+  //   };
   
 
-  return (
-    <>
-  <Grid container direction="row" justify="center" alignItems="center" >
-    <Paper className={classes.root} elevation={6}>
-    <Container>
-        <Row>
-          <Col md="2">
-            <h3> Log a Timesheet</h3>
-            <hr />
-              <PersonalInfor
-                active={activeModal}
-                handleModal={handleModal}
-                token={token}
-                id={id}
-                setErrorMessage={setErrorMessage}
-              />
-              <button
-                className="button is-fullwidth mb-5 is-primary"
-                onClick={() => setActiveModal(true)}
-              >
-                Create TimeSheet
-              </button>
-            </Col>
+  // onChange = e => {
+  //   this.setState({ [e.target.name]: e.target.value });
+  // };
 
-            <Col md="1"></Col>
-            <Col md="9">
-              <h3> Timesheet History</h3>
-              <hr />
-                  <ErrorMessage message={errorMessage} />
-                  {loaded && timesheets ? (
-                    <table className="table is-fullwidth">
-                      <thead>
-                        <tr>
-                          <th>Subject</th>
-                          <th>Campus</th>
-                          <th>Day</th>
-                          <th>AM/PM/EVE</th>
-                          <th>Time</th>
-                          <th>Course</th>
-                          <th>Group</th>
-                          <th>ZoomID</th>
-                          <th>ZoomPassWord</th>
-                          <th>ZoomLink</th>
-                          <th>Room Number</th>
-                          <th>Classroom Capacity</th>
-                          <th>No of Students</th>
-                          <th>Student Profile</th>
-                          <th>Class Size</th>
-                          <th>Unique Group</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {timesheets.map((e) => (
-                          <tr key={id}>
-                            <td>{e.subject}</td>
-                            <td>{e.campus}</td>
-                            <td>{e.day}</td>
-                            <td>{e.am_pm_eve}</td>
-                            <td>{e.time}</td>
-                            <td>{e.course}</td>
-                            <td>{e.group}</td>
-                            <td>{e.zoom_id_for_trainer}</td>
-                            <td>{e.zoom_password_for_trainer}</td>
-                            <td>{e.zoom_link_for_students}</td>
-                            <td>{e.campus_room_no_capacity}</td>
-                            <td>{e.classrom_capacity}</td>
-                            <td>{e.number_of_student}</td>
-                            <td>{e.student_profile}</td>
-                            <td>{e.class_size_utilization}</td>
-                            <td>{e.unique_group}</td>
-                            <td>{moment(e.created_at).format("MMM Do YY")}</td>
-                            <td>
-                              <button
-                                className="button mr-2 is-info "
-                                onClick={() => handleUpdate(e.id)}
-                              >
-                                Update
-                              </button>
-                              <button
-                                className="button mr-2 is-danger "
-                                onClick={() => handleDelete(e.id)}
-                              >
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  ) : (
-                    <p>Loading</p>
-                  )}
-          </Col>
-        </Row>
-      </Container>
-  </Paper>
-</Grid>
-    </>
-  );
+  // createTimeSheet = e => {
+  //   e.preventDefault();
+  //   client.createTimeSheet(this.state).then(() => {
+  //     this.props.resetState();
+  //     this.props.toggle();
+  //   });
+  // };
+
+  // editTimeSheet = e => {
+  //   e.preventDefault();
+  //   client.editTimeSheet(this.state).then(() => {
+  //     this.props.resetState();
+  //     this.props.toggle();
+  //   });
+  // };
+
+  // defaultIfEmpty = value => {
+  //   return value === "" ? "" : value;
+  //};
+
+ 
+    return (
+<Form id="myform" onSubmit={(e) =>onTimesheet(e)}>
+  <Row>
+    <Col md={6}>
+      <FormGroup>
+        <Label for="Subject">
+        Subject
+        </Label>
+        <Input
+          id="Subject"
+          placeholder="Select Subject"
+          type="select"
+          error={error.subject}
+          value={timesheet.subject}
+          onChange={(e) => setTimesheet({...timesheet, subject: e.target.value })}
+          required
+        >
+          <option></option>
+          <option>Nurturing Children</option>
+          <option>Curriculm Design</option>
+          <option>Health Science A (1-3T)</option>
+          <option>Massage Clinic C</option>
+          <option>Leadership in Early Childhood Education</option>
+          <option>Diverse Clients</option>
+          <option>Counselling Specialisation</option>
+          <option>The Yoga Business</option>
+          <option>Healthy Bodies Theory</option>
+          <option>Cycle A Theory </option>
+          <option>Advanced Personal Training(Theory+Practical)</option>
+          <option>Human Resource Management</option>
+        </Input>
+      </FormGroup>
+    </Col>
+    <Col md={6}>
+      <FormGroup>
+        <Label for="Course">
+        Course
+        </Label>
+        <Input
+          id="Course"
+          placeholder="Select course"
+          type="select"
+          error={error.course}
+          value={timesheet.course}
+          onChange={(e) => setTimesheet({...timesheet, course: e.target.value })}
+          required
+        >
+          <option></option>
+          <option>CIII ECEC(OLD)</option>
+          <option>DIP ECEC(OLD)</option>
+          <option>CIV Massage</option>
+          <option>DIP Massage</option>
+          <option>DIP ECEC(NEW)</option>
+          <option>DIP CNSL/CS/MH</option>
+          <option>DIP CNSL</option>
+          <option>DIP ECEC(OLD)</option>
+          <option>CIV YOGA</option>
+          <option>CIV FIT</option>
+          <option>DRSM FIT</option>
+        </Input>
+      </FormGroup>
+    </Col>
+  </Row>
+
+  <Row>
+    <Col md={4}>
+      <FormGroup>
+        <Label for="Campus">
+        Campus
+        </Label>
+        <Input
+          id="Campus"
+          placeholder="Select campus"
+          className="mb-3"
+          type="select"
+          error={error.campus}
+          value={timesheet.campus}
+          onChange={(e) => setTimesheet({...timesheet, campus: e.target.value })}
+        >
+          <option></option>
+          <option>SYDNEY</option>
+          <option>MELBOURNE</option>
+          <option>BRISBANE</option>
+          <option>PERTH</option>
+        </Input>
+      </FormGroup>
+    </Col>
+    <Col md={3}>
+      <FormGroup>
+        <Label for="Day">
+        Day
+        </Label>
+        <Input
+          id="Day"
+          placeholder="Select day"
+          type="select"
+          error={error.day}
+          value={timesheet.day}
+          onChange={(e) => setTimesheet({...timesheet, day: e.target.value })}
+          required
+        >
+          <option></option>
+          <option>MONDAY</option>
+          <option>TUESDAY</option>
+          <option>WEDNESDAY</option>
+          <option>THURSDAY</option>
+          <option>FRIDAY</option>
+      </Input>
+      </FormGroup>
+    </Col>
+    <Col md={2}>
+      <FormGroup>
+        <Label for="am_pm_eve">
+        AM/PM/EVE
+        </Label>
+        <Input
+          id="am_pm_eve"
+          placeholder=""
+          type="select"
+          error={error.am_pm_eve}
+          value={timesheet.am_pm_eve}
+          onChange={(e) => setTimesheet({...timesheet, am_pm_eve: e.target.value })}
+          required
+          >
+          <option></option>
+          <option>AM</option>
+          <option>PM</option>
+          <option>EVE</option>
+
+        </Input>
+      </FormGroup>
+    </Col>
+    <Col md={3}>
+      <FormGroup>
+        <Label for="time">
+          Time
+        </Label>
+        <Input
+          id="time"
+          placeholder=""
+          type="text"
+          error={error.time}
+          value={timesheet.time}
+          onChange={(e) => setTimesheet({...timesheet, time: e.target.value })}
+          required
+          />
+
+      </FormGroup>
+    </Col>
+  </Row>
+  <FormGroup>
+    <Label for="group">
+      Group
+    </Label>
+    <Input
+      id="group"
+      placeholder="Select group"
+      type="text"
+      error={error.group}
+      value={timesheet.group}
+      onChange={(e) => setTimesheet({...timesheet, group: e.target.value })}
+
+    />
+  </FormGroup>
+
+
+  
+  <Button>
+    Lodge Timesheet
+  </Button>
+</Form>
+      // <Form onSubmit={this.props.timesheet ? this.editTimeSheet : this.createTimeSheet}>
+      //   <FormGroup>
+      //     <Label for="name">Name:</Label>
+      //     <Input
+      //       type="text"
+      //       name="name"
+      //       onChange={this.onChange}
+      //       value={this.defaultIfEmpty(this.state.name)}
+      //     />
+      //   </FormGroup>
+      //   <FormGroup>
+      //     <Label for="email">Email:</Label>
+      //     <Input
+      //       type="email"
+      //       name="email"
+      //       onChange={this.onChange}
+      //       value={this.defaultIfEmpty(this.state.email)}
+      //     />
+      //   </FormGroup>
+      //   <FormGroup>
+      //     <Label for="document">Document:</Label>
+      //     <Input
+      //       type="text"
+      //       name="document"
+      //       onChange={this.onChange}
+      //       value={this.defaultIfEmpty(this.state.document)}
+      //     />
+      //   </FormGroup>
+      //   <FormGroup>
+      //     <Label for="phone">Phone:</Label>
+      //     <Input
+      //       type="text"
+      //       name="phone"
+      //       onChange={this.onChange}
+      //       value={this.defaultIfEmpty(this.state.phone)}
+      //     />
+      //   </FormGroup>
+      //   <Button>Send</Button>
+      // </Form>
+   
+    );
 };
 
 export default TimeSheetForm;
+
