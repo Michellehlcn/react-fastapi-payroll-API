@@ -1,8 +1,10 @@
+from sqlalchemy import false
 from models.form_model import Form
 import schemas.form_schema as form_schema
 import sqlalchemy.orm as _orm
 import models.user_model as user_model
 import schemas.user_schema as user_schema
+from fastapi import HTTPException
 
 class FormService:
 
@@ -23,8 +25,10 @@ class FormService:
     @staticmethod 
     def retreive_job(id: int, db: _orm.Session):
         item = db.query(Form).filter(Form.id == id).first()
+        if not item:
+            raise HTTPException(status_code=400, detail=f'No record with form_id {id}')
         return item
-
+    
 
     def list_jobs(db: _orm.Session):
         jobs = db.query(Form).all()
@@ -55,3 +59,25 @@ class FormService:
     def search_job(query: str, db: _orm.Session):
         jobs = db.query(Form).filter(Form.title.contains(query))
         return jobs
+    
+    @staticmethod
+    async def activate_timesheet(id:int, db:_orm.Session):
+        """activate a timesheet"""
+        record = retreive_job(id,db)
+        if not record:
+            raise HTTPException(status_code=400, detail='No record matches the id provided')
+        # set the active status to false
+        record.is_active = True
+        db.commit()
+        return record
+
+    @staticmethod
+    async def deactivate_timesheet(id:int, db:_orm.Session):
+        """Deactivate a timesheet"""
+        record = retreive_job(id,db)
+        if not record:
+            raise HTTPException(status_code=400, detail='No record matches the id provided')
+        # set the active status to false
+        record.is_active = False
+        db.commit()
+        return record

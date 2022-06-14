@@ -4,7 +4,7 @@ import React, { useState } from "react";
 //import { UserContext } from "../context/UserContext";
 import { useNavigate, Link } from "react-router-dom";
 
-import { TextField, Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FastAPIClient from '../client';
 import config from '../config';
@@ -109,6 +109,7 @@ const Login = () => {
     client.login(loginForm.email, loginForm.password)
       .then( (response) => {
         console.log(response);
+        setLoading(true);
         navigate('/dashboard')
       })
       .catch( (err) => {

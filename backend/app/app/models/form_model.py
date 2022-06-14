@@ -30,7 +30,7 @@ class Form(_database.Base):
     unique_group = _sql.Column(_sql.Boolean(), default=False)
 
     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
-    is_active = _sql.Column(_sql.Boolean(), default=True, nullable=False)
+    is_active = _sql.Column(_sql.Boolean(), default=False, nullable=False)
     owner_id = _sql.Column(_sql.Integer, _sql.ForeignKey("users.id"))
 
     owner = _orm.relationship("User", back_populates="form")

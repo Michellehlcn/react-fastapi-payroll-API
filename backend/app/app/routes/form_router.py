@@ -103,23 +103,41 @@ async def create_job(
         user: user_schema.User = _fastapi.Depends(user_router.get_current_user),    
        db: _orm.Session = _fastapi.Depends(_database.get_db)):
     return form_service.FormService.create_new_job(user=user, db=db, job=job)
+   
 
+@router.delete("/delete-timesheet/{id}")
+async def show_jobs_to_delete(
+            id: int,
+            user: user_schema.User = _fastapi.Depends(user_router.get_current_user),
+            db:_orm.Session = _fastapi.Depends(_database.get_db)):
+    return form_service.FormService.delete_job_by_id(id=id, db=db,owner_id=user.id)
 
-       
+@router.get("/timesheet/{id}")
+async def get_timesheet_from_id(
+            id: int,
+            db:_orm.Session = _fastapi.Depends(_database.get_db)):
+    return form_service.FormService.retreive_job(id=id, db=db)
 
-@router.get("/delete-timesheet")
-def show_jobs_to_delete(request: _fastapi.Request, db:_orm.Session = _fastapi.Depends(_database.get_db)):
-    jobs = form_service.FormService.list_jobs(db=db)
-    return templates.TemplateResponse(
-        "delete_timesheet.html", {"request": request, "jobs": jobs}
-    )
+@router.put("/activate-timesheet/{id}",
+summary="Activate timesheet",
+response_description='the updated status timesheet')
 
+async def activate_timesheet(
+    id:int,
+    db:_orm.Session = _fastapi.Depends(_database.get_db),
+    user: user_schema.User = _fastapi.Depends(user_router.get_current_user)):
+    
+    form_service.FormService.activate_timesheet(id=id, db=db)
+    return form_service.FormService.retreive_job(id=id, db=db)
 
-@router.get("/search")
-def search(
-    request: _fastapi.Request, db:_orm.Session = _fastapi.Depends(_database.get_db), query: Optional[str] = None
-):
-    jobs = form_service.FormService.search_job(query, db=db)
-    return templates.TemplateResponse(
-        "homepage.html", {"request": request, "jobs": jobs}
-    )
+@router.put("/deactivate-timesheet/{id}",
+summary="Deactivate timesheet",
+response_description='the updated status timesheet')
+
+async def deactivate_timesheet(
+    id:int,
+    db:_orm.Session = _fastapi.Depends(_database.get_db),
+    user: user_schema.User = _fastapi.Depends(user_router.get_current_user)):
+    
+    form_service.FormService.deactivate_timesheet(id=id, db=db)
+    return form_service.FormService.retreive_job(id=id, db=db)

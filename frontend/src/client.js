@@ -130,11 +130,17 @@ class FastAPIClient {
   
 
 
-  deleteTimeSheet() {
-    return this.apiClient.delete(`/form/delete-a-timesheet`);
+  deleteTimeSheet(id) {
+    return this.apiClient.delete(`/form/delete-timesheet/${id}`);
   }
-  editTimeSheet() {
-    return this.apiClient.delete(`/form/delete-a-timesheet`);
+  viewTimeSheet(id) {
+    return this.apiClient.get(`/form/timesheet/${id}`);
+  }
+  activateTimeSheet(id){
+    return this.apiClient.put(`/form/activate-timesheet/${id}`)
+  }
+  deactivateTimeSheet(id){
+    return this.apiClient.put(`/form/deactivate-timesheet/${id}`)
   }
 }
 
