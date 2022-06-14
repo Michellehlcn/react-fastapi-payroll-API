@@ -1,5 +1,5 @@
 # react-fastapi-payroll-API
-Working In Progress
+Work In Progress
 
 ### Instruction 
 python3 -m venv .env
@@ -27,12 +27,17 @@ npm start
 ![Screen Shot 2022-04-19 at 7 36 25 am](https://user-images.githubusercontent.com/83108919/163883903-285bb961-53aa-45f8-b160-61d3b1b3fec3.png)
 
 ### TimeSheet View - Trainer View
-![Screen Shot 2022-05-15 at 8 17 30 pm](https://user-images.githubusercontent.com/83108919/168467901-27702e7a-46c1-435d-8eea-f045375b33fb.png)
+![Screen Shot 2022-05-30 at 11 01 00 pm](https://user-images.githubusercontent.com/83108919/170997943-078a7485-c2ea-4698-9ab6-4a3861323219.png)
 
 ### Filing Timesheet Form
+![Screen Shot 2022-05-29 at 6 48 12 pm](https://user-images.githubusercontent.com/83108919/170859974-27d9df2e-6ec6-4ce6-b430-e82ca2993d93.png)
 
 ### Admin Page View
 ![Screen Shot 2022-05-09 at 12 12 56 am](https://user-images.githubusercontent.com/83108919/167300385-e6ca3efc-8482-41f9-bde7-87bf0c0c708b.png)
+
+### Admin Page ciew - Approval timesheets
+![Screen Shot 2022-05-30 at 7 32 15 am](https://user-images.githubusercontent.com/83108919/170892188-b284c577-bc2a-4549-9e8d-a962507cbbe6.png)
+
 
 ### API EndPoints
 ![Screen Shot 2022-05-03 at 8 40 54 am](https://user-images.githubusercontent.com/83108919/166690946-db6a22eb-e1fc-40c8-8c23-008dc2c4cc04.png)
