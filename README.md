@@ -2,22 +2,27 @@
 Work In Progress
 
 ### Instruction 
+```
 python3 -m venv .env
 source .env/bin/activate
-
+```
 ### Install requires
+```
 pip3 install -r requirements.txt
-
+```
 ### Install react dependencies
+```
 cd ./frontend/src && npm install
-
+```
 ### Start app
 ### Run api
-cd ./backend/app/app && uvicorn main:app -- reload
-
+```
+cd ../../backend/app/app && uvicorn main:app -- reload
+```
 ### Run react
+```
 npm start 
-
+```
 ## Screenshot Review
 ### Authentication Dashboard
 ![Screen Shot 2022-05-04 at 11 25 24 pm](https://user-images.githubusercontent.com/83108919/166690840-737406d1-3923-4b2c-bde0-98ea44d71525.png)
@@ -47,14 +52,17 @@ npm start
 Please create Docker account
 
 ### Docker login
+```
 docker login -u UserName
-  
+```  
 ### Run Docker
+```
 docker-compose -f docker-compose.local.yml up -d
-  
+```  
 ### When the process completes, please run and you should see two containers running:
+```
 docker ps
-
+```
 
 # Deploy to Heroku by using Docker
 ### Login into Heroku account
